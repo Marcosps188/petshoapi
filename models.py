@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
 from database import Base
 from sqlalchemy.sql import func
+from sqlalchemy.orm import relationship
 
 class CategoriaModel(Base):
     __tablename__ = "categoria"  # nome da tabela
@@ -30,8 +31,7 @@ class UsuarioModel(Base):
 
     nome = Column(
         String,
-        nullable=False,
-        unique=True
+        nullable=False
     )
 
     email = Column(
@@ -101,5 +101,7 @@ class FreelancerModel(Base):
         ForeignKey("categoria.id_categoria")
         )
 
+     usuario = relationship("UsuarioModel")
+    categoria = relationship("CategoriaModel")
 
 

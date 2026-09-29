@@ -1,31 +1,29 @@
-from pydantic import BaseModel, ConfigDict
+from typing import Literal
 from datetime import datetime
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
-#schema de entrada de dados (post/requisição)
+# schemas de entrada de dados (post/put)
 class CategoriaSchema(BaseModel):
-    nome: str
+    nome: str = Field(min_length=2, max_length=50)
+
 
 class UsuarioSchema(BaseModel):
-    nome: str
-    email: str
-    telefone: str
-    tipo_usuario: str
+    nome: str = Field(min_length=2, max_length=100)
+    email: EmailStr
+    telefone: str = Field(min_length=8, max_length=20)
+    tipo_usuario: Literal["cliente", "freelancer"] = "cliente"
+
 
 class FreelancerSchema(BaseModel):
-    
-    valor_hora: int
-    bio: str
-    habilidade: str
+    valor_hora: int = Field(gt=0)
+    bio: str = Field(min_length=5)
+    habilidade: str = Field(min_length=2)
     id_usuario: int
     id_categoria: int
 
-    
 
-    
-
-#Schema saida de dados (aparecer o ID)
-
+# schemas de saida de dados
 class CategoriaResponseSchema(CategoriaSchema):
     id_categoria: int
     model_config = ConfigDict(from_attributes=True)
@@ -37,15 +35,23 @@ class UsuarioResponseSchema(UsuarioSchema):
     model_config = ConfigDict(from_attributes=True)
 
 
-class FreelancerResponseSchema(FreelancerSchema):
-    id_freelancer: int
+class UsuarioResumoSchema(BaseModel):
+    nome: str
+    email: str
+    telefone: str
     model_config = ConfigDict(from_attributes=True)
 
 
+class CategoriaResumoSchema(BaseModel):
+    nome: str
+    model_config = ConfigDict(from_attributes=True)
 
 
-
-# Permitir que o Pydantic leia objetos do banco de dados 
-model_config = ConfigDict(from_attributes=True)
-
-#configdict foi usado pq o pydantic atualizado pede pra usar.
+class FreelancerResponseSchema(BaseModel):
+    id_freelancer: int
+    valor_hora: int
+    bio: str
+    habilidade: str
+    usuario: UsuarioResumoSchema
+    categoria: CategoriaResumoSchema
+    model_config = ConfigDict(from_attributes=True)
