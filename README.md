@@ -1,4 +1,5 @@
 Projeto feito por: Otavio Augusto, Caua Rodriguez e Matheus Elias
+ Stop-Process -Name "python" -Force -ErrorAction SilentlyContinue
 
 API desenvolvida com FastAPI para gerenciamento do **Freejob**, uma plataforma de marketplace de freelancers voltada para o setor de tecnologia/TI. O sistema controla o cadastro de categorias, usuários (clientes e freelancers) e dos perfis de freelancer vinculados a cada usuário, permitindo consultar, cadastrar e remover essas informações via endpoints HTTP.
 
