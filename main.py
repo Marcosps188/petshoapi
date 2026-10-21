@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 from database import Base, engine
 from routers import categoria, usuario, freelancer
 
-Base.metadata.create_all(bind=engine)
+#Base.metadata.create_all(bind=engine)
 
 # titulo
 app = FastAPI(

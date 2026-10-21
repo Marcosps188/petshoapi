@@ -101,7 +101,7 @@ class FreelancerModel(Base):
         ForeignKey("categoria.id_categoria")
         )
 
-     usuario = relationship("UsuarioModel")
+    usuario = relationship("UsuarioModel")
     categoria = relationship("CategoriaModel")
 
 
